@@ -2,7 +2,8 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 export interface SensorProps {
   icon: string;
@@ -16,6 +17,12 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const toggleSidebar = () => {
     setExpanded(!expanded);
   };
+
+  const isMobile = useMediaQuery({ maxWidth: 640 });
+  useEffect(() => {
+    setExpanded(!isMobile)
+    console.log(isMobile)
+  }, [isMobile])
   return (
     <div>
       <aside

@@ -36,7 +36,7 @@ export default function WaterHeight() {
     <main>
       <h1 className="text-lg font-semibold text-gray-700">WATER HEIGHT</h1>
       <p className="text-gray-500">{now.toDateString()}</p>
-      <div className="rounded-lg shadow-md  p-4 mb-4 text-gray-500">
+      <div className="rounded-lg shadow-md  p-4 mb-4 text-gray-500 overflow-x-auto">
         <div className="flex w-full mb-4">
           <div className="w-3/4">
             <h3 className="font-medium text-gray-700 text-md">
@@ -63,8 +63,8 @@ export default function WaterHeight() {
         </div>
         <WaterHeightChart date={date} />
       </div>
-      <div className="grid grid-cols-3 gap-4">
-        <div className="rounded-lg shadow-md p-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="rounded-lg shadow-md p-4 overflow-x-auto">
           <h3 className="font-medium mb-2">Status</h3>
           <ul>
             <li className="flex gap-2 items-center">
@@ -84,7 +84,7 @@ export default function WaterHeight() {
             </li>
           </ul>
         </div>
-        <div className="col-span-2 shadow-md rounded-lg p-4">
+        <div className="md:col-span-2 shadow-md rounded-lg p-4 overflow-x-auto">
           <h3 className="font-medium">ATTENTION</h3>
         </div>
       </div>
