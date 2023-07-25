@@ -97,10 +97,10 @@ const Circle = ({ bgColor }: { bgColor: string }) => {
 };
 
 const WaterHeightChart = ({ date }: { date?: string }) => {
-  const basePath = window.location.origin;
+  const basePath = typeof window !== "undefined" && window.location.origin;
   const fetcher = async (url: string) => await fetch(url).then((r) => r.json());
   const { data, error } = useSWR(
-    `${basePath}/api/v1/water-height${
+    `${basePath ? basePath : ''}/api/v1/water-height${
       date && date != "" ? `?date=${date}` : ""
     }`,
     fetcher
