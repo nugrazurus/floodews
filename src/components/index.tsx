@@ -19,6 +19,16 @@ import {
 import { Line } from "react-chartjs-2";
 import useSWR from "swr";
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 interface SensorProps {
   icon: string;
   title: string;
@@ -150,7 +160,7 @@ export const Toast = ({
       <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
         <Icon icon="mdi:alert-circle" />
       </div>
-      <div className="ml-3 text-sm font-normal">Failed to fetch data</div>
+      <div className="ml-3 text-sm font-normal">{message}</div>
       <button
         type="button"
         className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8"
@@ -171,10 +181,24 @@ export const GetSensorValue = () => {
   const fetcher = async (url: string) => await fetch(url).then((r) => r.json());
   const { data, error } = useSWR(basePath + "/api/v1/weather", fetcher);
 
-  if (!data) return <p>Loading...</p>;
-  if (error) return <Toast message="Failed to fetch" />;
+  if (!data)
+    return (
+      <div>
+        <div className="flex justify-end">
+          <div className="h-4 w-64 rounded-full bg-gray-200"></div>
+        </div>
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
+          <SensorSkeleton />
+          <SensorSkeleton />
+          <SensorSkeleton />
+          <SensorSkeleton />
+        </div>
+      </div>
+    );
 
-  const date = new Date(data.timestamp);
+  if (error) return <Toast message="Failed to fetch" isShow />;
+
+  const date = new Date(data.data.timestamp);
   const sensors: SensorProps[] = [
     {
       title: "Temperature",
@@ -239,15 +263,20 @@ export const SensorCard = ({ icon, title, value, unit }: SensorProps) => {
   );
 };
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+export const SensorSkeleton = () => {
+  return (
+    <div className="w-full flex flex-col aspect-square rounded-3xl shadow-md p-6 animate-pulse">
+      <div className="w-40 h-5 rounded-full bg-gray-200 mb-2"></div>
+      <div className="my-auto">
+        <div className="flex justify-between items-center mb-2">
+          <div className="h-12 w-32 rounded-full bg-gray-200"></div>
+          <div className="h-20 w-20 rounded-md bg-gray-200"></div>
+        </div>
+        <div className="h-5 w-24 rounded-full bg-gray-200"></div>
+      </div>
+    </div>
+  );
+};
 
 export const LineChart = ({
   chartData,
@@ -315,7 +344,7 @@ export const WeatherChart = () => {
         data: humidity,
         fill: false,
         backgroundColor: "rgb(249, 115, 22)",
-        borderColor: 'rgb(249, 115, 22)',
+        borderColor: "rgb(249, 115, 22)",
         tension: 0.4,
         pointRadius: 1,
       },
@@ -323,11 +352,11 @@ export const WeatherChart = () => {
         label: "Altitude",
         data: altitude,
         fill: false,
-        backgroundColor: 'rgb(234, 179, 8)',
-        borderColor: 'rgb(234, 179, 8)',
+        backgroundColor: "rgb(234, 179, 8)",
+        borderColor: "rgb(234, 179, 8)",
         tension: 0.4,
         pointRadius: 1,
-      }
+      },
     ],
   };
   const chartOptions = {
