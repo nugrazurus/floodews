@@ -20,9 +20,8 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   const isMobile = useMediaQuery({ maxWidth: 640 });
   useEffect(() => {
-    setExpanded(!isMobile)
-    console.log(isMobile)
-  }, [isMobile])
+    setExpanded(!isMobile);
+  }, [isMobile]);
   return (
     <div>
       <aside
@@ -71,7 +70,13 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
           </ul>
         </div>
       </aside>
-      <div className={`${expanded ? "pl-56 transition-all duration-300" : "pl-16 transition-all duration-300"}`}>
+      <div
+        className={`${
+          expanded
+            ? "pl-56 transition-all duration-300"
+            : "pl-16 transition-all duration-300"
+        }`}
+      >
         <div className="flex-1 p-6">{children}</div>
       </div>
     </div>
