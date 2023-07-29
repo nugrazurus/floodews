@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const dateReq = searchParams.get("date");
 
-  const [day, month, year] = dateReq ? dateReq.split("-").map(Number) : [];
+  const [year, month, day] = dateReq ? dateReq.split("-").map(Number) : [];
   const date = dateReq ? new Date(year, month, day) : new Date();
   const startOfDay = date.setHours(0, 0, 0, 0);
   const endOfDay = date.setHours(23, 59, 59, 999);
