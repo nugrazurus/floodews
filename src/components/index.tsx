@@ -113,14 +113,14 @@ const Menu = ({
   const isActive = (path: string) => path == pathname;
   return (
     <Link
-      className={`flex items-center py-2 gap-2 ${
+      className={`flex items-center py-2 gap-2 hover:text-white group ${
         isActive(path) ? "text-white" : "text-purple-500"
       }`}
       href={path}
     >
       <Icon
         icon={icon}
-        className={`text-3xl p-1 border-2 rounded-lg ${
+        className={`text-3xl p-1 border-2 rounded-lg group-hover:border-white ${
           isActive(path) ? "border-white" : "border-purple-500"
         }`}
       />

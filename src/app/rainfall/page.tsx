@@ -10,7 +10,7 @@ export default function Rainfall() {
   return (
     <main>
       <div className="mb-4">
-        <h1 className="text-lg font-semibold text-gray-700">WEATHER</h1>
+        <h1 className="text-lg font-semibold text-gray-700">RAINFALL</h1>
         <p className="text-gray-500">{now.toDateString()}</p>
       </div>
       <RainfallChart />
